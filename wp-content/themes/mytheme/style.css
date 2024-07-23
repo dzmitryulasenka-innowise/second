@@ -1,0 +1,18 @@
+/*
+Theme Name: mytheme
+Author: dzmitryulasenka
+Description: mytheme description
+Requires PHP: 8.2
+Version: 1
+Text Domain: mytheme
+*/
+
+h1, h2, h3 { color: #ff0000; }
+
+.site-header {
+    background-image: url("images/HeaderBackground.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 20px 0; /* Добавьте отступы для текста */
+}

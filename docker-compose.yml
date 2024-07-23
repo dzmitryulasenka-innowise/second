@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+
+  php:
+    image: php:8.1-apache-buster
+    ports:
+      - "84:80"
+    volumes:
+      - ./:/var/www/html  #  Отобразите ваш проект в контейнер
+    networks:
+      - wpsite
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=wordpress
+    volumes:
+      - ./databaseTest:/var/lib/mysql
+    networks:
+      - wpsite
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8001:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_POST=3306
+    networks:
+      - wpsite
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - "8010:80"
+    volumes:
+      - ./:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: root
+    networks:
+      - wpsite
+
+
+networks:
+  wpsite:
