@@ -2,21 +2,11 @@
 
 <?php
 // Создаем WP_Query с нужными аргументами
-//$args = array(
-//    'post_type' => 'product',
-//    'posts_per_page' => 5,
-//    'paged' => get_query_var( 'page' ) // Используем 'paged' для текущей страницы
-//);
-
 $query = new WP_Query([
     'post_type' => 'product',
     'posts_per_page' => 8,
     'paged' => get_query_var('page') ?: 1
 ]);
-
-//$query = new WP_Query( $args );
-
-
 
 if ( $query->have_posts() ) : ?>
     <div class="container">
@@ -27,6 +17,7 @@ if ( $query->have_posts() ) : ?>
 
                 <div class="col-md-3 mb-4">
                     <article <?php post_class(); ?>>
+                        <h2><?php the_title(); ?></h2>
                         <small><?php the_time('F jS, Y') ?> Автор: <?php the_author_posts_link() ?></small>
 
                         <div>
@@ -45,9 +36,8 @@ if ( $query->have_posts() ) : ?>
                 </div>
 
             <?php endwhile;
+
             $GLOBALS['wp_query'] = $query;?>
-
-
             <?php the_posts_pagination(
                 [
                     'format' => '?page=%#%',
